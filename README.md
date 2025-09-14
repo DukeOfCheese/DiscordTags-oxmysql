@@ -48,7 +48,7 @@ For detailed configuration options, commands, and developer information, please 
 
 ## Support
 
-Discord Bot / oxmysql / script combination issues or supprot:
+Discord Bot / oxmysql / script combination issues or support:
 - [Discord Server](https://discord.gg/6wxdQMrruw)
 - DukeOfCheese @ Atlas Development
 
