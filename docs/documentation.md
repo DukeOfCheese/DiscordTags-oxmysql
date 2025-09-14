@@ -1,8 +1,8 @@
-# Headtag-Menu Documentation
+# DiscordTags-oxmysql Documentation
 
 ## Overview
 
-The Headtag-Menu is a FiveM resource that displays customizable headtags above players in-game. This system allows server administrators to configure different tags for different player roles, toggle visibility of tags, and customize the appearance and behavior of the headtag system.
+The DiscordTags-oxmysql is a FiveM resource that displays customizable tags above players in-game. This system allows server administrators to configure different tags for different player roles, toggle visibility of tags, and customize the appearance and behavior of the headtag system.
 
 ## Dependencies
 
@@ -10,7 +10,7 @@ This resource requires the following dependencies:
 - `ox_lib` - [GitHub Repository](https://github.com/overextended/ox_lib)
 - `RageUI` - A FiveM menu library
 
-Ensure these resources are installed and started before the Headtag-Menu.
+Ensure these resources are installed and started before DiscordTags-oxmysql.
 
 ## Configuration
 
@@ -47,24 +47,24 @@ Config.menu = {
 Config.EnableSearch = true  -- Enable/disable search functionality in the headtag menu
 ```
 
-### Headtag Display Configuration
+### Tag Display Configuration
 
 ```lua
 -- Format of the player's headtag
--- {HEADTAG} is the player's headtag
+-- {HEADTAG / GANGTAG} is the player's tag
 -- {SPEAKING} is the player's speaking status (color indicator)
 -- {SERVER_ID} is the server's ID
-Config.FormatDisplayName = "{HEADTAG} {SPEAKING}[{SERVER_ID}]"
+Config.FormatDisplayName = "{HEADTAG / GANGTAG} {SPEAKING}[{SERVER_ID}]"
 
-Config.DisplayHeight = 1.3  -- Height of the headtag above the player
-Config.PlayerNamesDist = 15  -- Distance at which headtags are visible
+Config.DisplayHeight = 1.3  -- Height of the tag above the player
+Config.PlayerNamesDist = 15  -- Distance at which tags are visible
 ```
 
 ### HUD Configuration
 
 ```lua
 Config.hud = {
-    enabled = true,  -- Enable/disable the headtag HUD
+    enabled = true,  -- Enable/disable the tag HUD
     position = {
         x = 30,  -- Distance from right edge of screen
         y = 30   -- Distance from top of screen
@@ -79,7 +79,7 @@ Config.hud = {
 Config.AutoSetHighestRole = false
 
 -- The Ace permission for all tags
-Config.allTags = 'headtags.all'
+Config.allTags = 'discordtags.all'
 
 -- Role list configuration
 -- The last role in the list will be considered the highest role
@@ -96,9 +96,7 @@ Config.roleList = {
 
 ```lua
 -- Permission for hiding headtag during noclip
-Config.noclip = {
-    ace = "headtags.noclip",
-}
+Config.noclip = "discordtags.noclip"
 ```
 
 ## Text Formatting
@@ -122,13 +120,13 @@ You can combine these codes to create formatted text. For example: `~r~Red ~b~Bl
 
 ## ACE Permissions
 
-The Headtag-Menu uses ACE permissions to determine which players have access to which tags. Here's how to set up permissions:
+The DiscordTags-oxmysql uses ACE permissions to determine which players have access to which tags. Here's how to set up permissions:
 
 1. Add the following to your server.cfg or a separate permissions file:
 
 ```
 # Grant access to all headtags
-add_ace group.admin headtags.all allow
+add_ace group.admin discordtags.all allow
 
 # Role-specific permissions
 add_ace group.admin headtag.owner allow
@@ -137,7 +135,7 @@ add_ace group.developer headtag.developer allow
 add_ace group.member headtag.member allow
 
 # NoClip permission
-add_ace group.admin headtags.noclip allow
+add_ace group.admin discordtags.noclip allow
 ```
 
 2. Assign players to the appropriate groups:
@@ -152,21 +150,25 @@ add_principal identifier.license:xxxxxxxxxxxxxxx group.moderator
 Players can use the following command to interact with the headtag system:
 
 - `/headtags` - Open the headtag menu
+- `/gangtags` - Open the gangtag menu
+- `/toggletags` - Toggle your tags so others cannot see them
+- `/hidetags` - Hides others tags client-sided for immersion
 
 ## Developer Information
 
 ### Server Events
 
-To hide a player's headtag during noclip:
+To hide a player's tags during noclip:
 ```lua
-TriggerServerEvent("jd-headtags:server:noclip")
+TriggerServerEvent("discordtags:server:noclip")
 ```
 
 ### Client Events
 
-- `jd-headtags:client:hideTag` - Hide a specific player's tag
-- `jd-headtags:client:toggleAllTags` - Toggle visibility of all tags
-- `jd-headtags:client:updateHeadtag` - Update a player's headtag
+- `discordtags:client:hideTag` - Hide a specific player's tag
+- `discordtags:client:toggleAllTags` - Toggle visibility of all tags
+- `discordtags:client:updateHeadtag` - Update a player's headtag
+- `discordtags:client:updateGangtag` - Update a player's gangtag
 
 ## Troubleshooting
 
@@ -186,21 +188,21 @@ TriggerServerEvent("jd-headtags:server:noclip")
 
 ## Discord Integration
 
-### Enhancing Headtag-Menu with Badger's Discord API / Ace Perms
+### Enhancing DiscordTags-oxmysql with Badger's Discord API / Ace Perms
 
-Integrating Badger's Discord API / Ace Perms with the Headtag-Menu can significantly improve your server's functionality by automating headtag assignments based on Discord roles. This section explains how to set up this integration.
+Integrating Badger's Discord API / Ace Perms with the DiscordTags-oxmysql can significantly improve your server's functionality by automating headtag assignments based on Discord roles. This section explains how to set up this integration.
 
-how ever this is soon to be deprecated due to me working on my own `discord-api` solution
+This can be replaced with [AtlasAPI](https://atlas-development.tebex.io/package/6741992) which is a better, database-sided option that can work regardless of the current Discord API status
 
-#### Required Resources
+#### Badger Resources
 
 - [Badger_Discord_API](https://github.com/JaredScar/Badger_Discord_API) - Provides methods to access Discord data within FiveM
 - [DiscordAcePerms](https://github.com/JaredScar/DiscordAcePerms) - Assigns Group "permissions" based on Discord roles
 
 #### Benefits of Integration
 
-1. **Automated Role Assignment** - Players automatically receive headtags based on their Discord roles
-2. **Reduced Administrative Overhead** - No need to manually assign headtags to players
+1. **Automated Role Assignment** - Players automatically receive tags based on their Discord roles
+2. **Reduced Administrative Overhead** - No need to manually assign tags to players
 3. **Dynamic Updates** - Changes to Discord roles are reflected in-game without server restarts
 4. **Consistent Role Management** - Centralized role management through Discord
 
@@ -227,10 +229,10 @@ add_ace group.member headtag.member allow
 
 4. **Verify Integration**:
    - Restart your server after configuration
-   - Join the server with different Discord roles to test if headtags are applied correctly
+   - Join the server with different Discord roles to test if tags are applied correctly
 
-This integration creates a seamless experience where players' Discord roles automatically determine their in-game headtags, streamlining server management and enhancing the roleplay experience.
+This integration creates a seamless experience where players' Discord roles automatically determine their in-game tags, streamlining server management and enhancing the roleplay experience.
 
 ## Support
 
-For additional support or to report issues, please contact the resource author: JoeV2@Joe Development.
+For additional support or to report issues, please contact the resource author: DukeOfCheese @ Atlas Development.

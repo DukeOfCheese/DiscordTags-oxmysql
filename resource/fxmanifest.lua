@@ -1,6 +1,6 @@
 fx_version 'cerulean'
 game 'gta5'
-author 'JoeV2@Freech\'s Development'
+author 'JoeV2@Freech\'s Development and DukeOfCheese @ Atlas Development'
 description 'Headtag System'
 version '1.1.5'
 lua54 'yes'
@@ -44,6 +44,7 @@ client_scripts {
 }
 
 server_scripts {
+    "@oxmysql/lib/MySQL.lua",
     "server/server.lua"
 }
 
@@ -54,6 +55,7 @@ files {
 }
 
 dependencies {
+    'oxmysql',
     'ox_lib',
     'RageUI'
 }

@@ -19,7 +19,7 @@ end
 
 function Debug(message)
     if Config.Debug then
-        print(message)
+        print("[DEBUG] " .. message)
     end
 end
 
