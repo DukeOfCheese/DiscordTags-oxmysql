@@ -15,7 +15,7 @@ class MyBot(commands.Cog):
         self.bot = bot
         self.tree = Tree()
 
-@bot.event()
+@bot.event
 async def setup_hook():
     print("------")
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
